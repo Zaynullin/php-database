@@ -1,49 +1,70 @@
+<?php
+    session_start();
+
+    if (empty($_SESSION['login']) || empty($_SESSION['idGroup']))
+    {
+?>
 <!DOCTYPE HTML>
 <html>
-<!--
-   Design: Gostkov Evgeniy
-   date: 6.04.2012
--->
 <head>
-    <title>Main page | Database-project</title>
-    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
-    <link rel="stylesheet" href="../css/base.css" type="text/css">
+    <title>Admin main page auth | Database-project</title>
+    <?php include "cssandscript.html"; ?>
 </head>
 
 <body>
-<!-- div header - include  -->
-<div id="main-header">
-    <a href="index.php">
-        <img src="../images/header.png">
-    </a>
-</div>
-<hr />
-<div id="main-content">
-    <!-- menu of site -->
-    <div class="menu">
-        <ul>
-            <li><a href="../index.php">Main page</a></li>
-            <li><a href="users.php">Users</a></li>
-            <li><a href="groups.php">Groups</a></li>
-        </ul>
+
+    <div id="main-header">
+        <a href="index.php">
+            <img src="../images/header.png">
+        </a>
     </div>
 
-    <!-- other content -->
-    <div id="content">
-        Database. Third task. web-site with support forum, gallery, social network
+    <hr />
+
+
+    <div id="main-content">
+        <div id="content">
+
+            <div id="adminAuth">
+
+                <form id="adminAuthForm" action="handler.php" method="post">
+
+                    <table>
+                        <tr>
+                            <td>Login:</td> <td><input type="text" name="authLogin" required="1" /></td>
+                        </tr>
+                        <tr>
+                            <td>Password:</td><td><input type="password" name="authPassword" required="1" /> <br /></td>
+                        </tr>
+                    </table>
+
+                        <input type="submit" />
+
+                </form>
+
+            </div>
+
+        </div>
     </div>
 
-    <div id="left-menu">
-        <form action="auth.php" method="get">
-            Login: <input type="text" name="login" required="1" /><br />
-            Pass: <input type="password" name="password" required="1" /> <br />
-            <input type="submit" value="Auth"/> or <a href="registration.php">register</a>
-        </form>
-    </div>
-
-</div>
 </body>
+
 </html>
 <?php
-
+    }
+    
+    else
+    {
+        if ($_SESSION['idGroup'] == 1)
+        {
+            header ("Location: http://localhost/task-3-db/admin/main.php");
+            exit();
+        }
+        else
+        {
+            $_SESSION['error'] = 'You not administration group';
+            header ("Location: http://localhost/task-3-db/index.php");
+            exit();
+        }
+    }
 ?>

@@ -76,3 +76,9 @@ html, body {
     text-decoration: none;
 }
 
+#errorMessage {
+    color: red;
+}
+#helloMessage{
+    color: green;
+}
